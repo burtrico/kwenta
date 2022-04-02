@@ -14,6 +14,7 @@ import { CurrencyKey, Synths } from 'constants/currency';
 import MarketDetails from '../MarketDetails';
 import TVChart from 'components/TVChart';
 import FuturesPositionsTable from 'sections/dashboard/FuturesPositionsTable';
+import useGetFuturesMarkets from 'queries/futures/useGetFuturesMarkets';
 
 type MarketInfoProps = {
 	market: string;
@@ -24,6 +25,10 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 	const { useExchangeRatesQuery } = useSynthetixQueries();
 	const exchangeRatesQuery = useExchangeRatesQuery();
 
+	const futuresMarketsQuery = useGetFuturesMarkets();
+	const futuresMarkets = futuresMarketsQuery?.data ?? [];
+	// const otherFuturesMarkets = futuresMarkets.filter(market !== )
+
 	const exchangeRates = exchangeRatesQuery.isSuccess ? exchangeRatesQuery.data ?? null : null;
 	const { selectedPriceCurrency } = useSelectedPriceCurrency();
 	const baseCurrencyKey = market as CurrencyKey;
@@ -32,6 +37,9 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 		() => getExchangeRatesForCurrencies(exchangeRates, baseCurrencyKey, selectedPriceCurrency.name),
 		[exchangeRates, baseCurrencyKey, selectedPriceCurrency]
 	);
+
+	console.log("selected price currency =", selectedPriceCurrency)
+	console.log("futures markets =", futuresMarkets)
 
 	return (
 		<Container>
@@ -51,27 +59,7 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 			<TVChart baseCurrencyKey={baseCurrencyKey} quoteCurrencyKey={Synths.sUSD} />
 			<UserInfo marketAsset={baseCurrencyKey} />
 			
-			<TabButtonsContainer>
-				{POSITIONS_TABS.map(({ name, label, badge, active, disabled, onClick }) => (
-					<TabButton
-						key={name}
-						title={label}
-						badge={badge}
-						active={active}
-						disabled={disabled}
-						onClick={onClick}
-					/>
-				))}
-			</TabButtonsContainer>
-			<TabPanel name={PositionsTab.FUTURES} activeTab={activePositionsTab}>
-				<FuturesPositionsTable
-					futuresMarkets={futuresMarkets}
-				/>
-			</TabPanel>
-
-			<TabPanel name={PositionsTab.SHORTS} activeTab={activePositionsTab}></TabPanel>
-
-			<TabPanel name={PositionsTab.SPOT} activeTab={activePositionsTab}></TabPanel>
+			<FuturesPositionsTable futuresMarkets={futuresMarkets} />
 
 		</Container>
 	);
