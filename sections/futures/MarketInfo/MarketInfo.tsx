@@ -13,6 +13,7 @@ import UserInfo from '../UserInfo';
 import { CurrencyKey, Synths } from 'constants/currency';
 import MarketDetails from '../MarketDetails';
 import TVChart from 'components/TVChart';
+import FuturesPositionsTable from 'sections/dashboard/FuturesPositionsTable';
 
 type MarketInfoProps = {
 	market: string;
@@ -49,6 +50,29 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 			<MarketDetails baseCurrencyKey={baseCurrencyKey} />
 			<TVChart baseCurrencyKey={baseCurrencyKey} quoteCurrencyKey={Synths.sUSD} />
 			<UserInfo marketAsset={baseCurrencyKey} />
+			
+			<TabButtonsContainer>
+				{POSITIONS_TABS.map(({ name, label, badge, active, disabled, onClick }) => (
+					<TabButton
+						key={name}
+						title={label}
+						badge={badge}
+						active={active}
+						disabled={disabled}
+						onClick={onClick}
+					/>
+				))}
+			</TabButtonsContainer>
+			<TabPanel name={PositionsTab.FUTURES} activeTab={activePositionsTab}>
+				<FuturesPositionsTable
+					futuresMarkets={futuresMarkets}
+				/>
+			</TabPanel>
+
+			<TabPanel name={PositionsTab.SHORTS} activeTab={activePositionsTab}></TabPanel>
+
+			<TabPanel name={PositionsTab.SPOT} activeTab={activePositionsTab}></TabPanel>
+
 		</Container>
 	);
 };
