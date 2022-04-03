@@ -25,8 +25,8 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 	const { useExchangeRatesQuery } = useSynthetixQueries();
 	const exchangeRatesQuery = useExchangeRatesQuery();
 
-	const futuresMarketsQuery = useGetFuturesMarkets();
-	const futuresMarkets = futuresMarketsQuery?.data ?? [];
+	// const futuresMarketsQuery = useGetFuturesMarkets();
+	// const futuresMarkets = futuresMarketsQuery?.data ?? [];
 	// const otherFuturesMarkets = futuresMarkets.filter(market !== )
 
 	const exchangeRates = exchangeRatesQuery.isSuccess ? exchangeRatesQuery.data ?? null : null;
@@ -38,7 +38,6 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 		[exchangeRates, baseCurrencyKey, selectedPriceCurrency]
 	);
 
-	console.log("selected price currency =", selectedPriceCurrency)
 	console.log("futures markets =", futuresMarkets)
 
 	return (
@@ -59,7 +58,7 @@ const MarketInfo: FC<MarketInfoProps> = ({ market }) => {
 			<TVChart baseCurrencyKey={baseCurrencyKey} quoteCurrencyKey={Synths.sUSD} />
 			<UserInfo marketAsset={baseCurrencyKey} />
 			
-			<FuturesPositionsTable futuresMarkets={futuresMarkets} />
+			{/* <FuturesPositionsTable futuresMarkets={futuresMarkets} /> */}
 
 		</Container>
 	);
