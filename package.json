@@ -31,7 +31,7 @@
 		"@synthetixio/assets": "2.0.12",
 		"@synthetixio/contracts-interface": "2.66.0-1",
 		"@synthetixio/optimism-networks": "2.63.1",
-		"@synthetixio/providers": "2.64.1",
+		"@synthetixio/providers": "2.74.9",
 		"@synthetixio/queries": "2.64.1",
 		"@synthetixio/transaction-notifier": "2.63.1",
 		"@synthetixio/wei": "2.63.1",
