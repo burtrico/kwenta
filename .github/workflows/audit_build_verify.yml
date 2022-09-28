@@ -47,7 +47,7 @@ jobs:
         continue-on-error: true
 
       - name: Building on Node.js ${{ matrix.node-version }} 🛠️
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.5.0
         with:
           node-version: '14.17.1'
 
